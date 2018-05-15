@@ -16,7 +16,10 @@
     "autoload": {
         "psr-4": {
             "Sample\\": "src/"
-        }
+        },
+        "files": [
+            "src/helper/reader.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
