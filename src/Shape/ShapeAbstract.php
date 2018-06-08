@@ -8,6 +8,8 @@
 
 namespace Sample\Shape;
 
+use Sample\Exception\InvalidShapeParameterException;
+
 abstract class ShapeAbstract
 {
     /**
@@ -18,16 +20,21 @@ abstract class ShapeAbstract
     /**
      * ShapeAbstract constructor.
      * @param Point $point
+     * @throws InvalidShapeParameterException
      */
     public function __construct(Point $point)
     {
         $this->point = $point;
+
+        if (!$this->validateParameters()) {
+            throw new InvalidShapeParameterException('invalid shape parameters value');
+        }
     }
 
     /**
      * @return int
      */
-    public function getX()
+    final public function getX()
     {
         return $this->point->getX();
     }
@@ -35,13 +42,13 @@ abstract class ShapeAbstract
     /**
      * @return mixed
      */
-    public function getY()
+    final public function getY()
     {
         return $this->point->getY();
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    abstract public function output() : string;
+    abstract public function validateParameters() : bool ;
 }

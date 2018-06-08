@@ -8,19 +8,14 @@
 
 namespace Sample\Shape;
 
-class Rectangle extends ShapeAbstract
+class Rectangle extends Square
 {
     const SHAPE_TYPE = 'rectangle';
 
     /**
      * @var int
      */
-    private $width;
-
-    /**
-     * @var int
-     */
-    private $height;
+    protected $height;
 
     /**
      * Rectangle constructor.
@@ -30,17 +25,8 @@ class Rectangle extends ShapeAbstract
      */
     public function __construct(Point $point, int $width, int  $height)
     {
-        parent::__construct($point);
-        $this->width = $width;
         $this->height = $height;
-    }
-
-    /**
-     * @return int
-     */
-    public function getWidth(): int
-    {
-        return $this->width;
+        parent::__construct($point, $width);
     }
 
     /**
@@ -52,18 +38,18 @@ class Rectangle extends ShapeAbstract
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    public function output() : string
+    public function validateParameters() :bool
     {
-        return sprintf('%s (%d,%d) width=%d height=%d', ucfirst(self::SHAPE_TYPE), $this->getX(), $this->getY(), $this->getWidth(), $this->getHeight());
+        /**
+         * cause it will be a square
+         */
+        return $this->getWidth() !== $this->getHeight();
     }
 
-    /**
-     * @return Point
-     */
-    public function getPoint(): Point
+    public function __toString()
     {
-        return $this->point;
+        return sprintf('%s (%d,%d) width=%d height=%d', ucfirst(static::SHAPE_TYPE), $this->getX(), $this->getY(), $this->getWidth(), $this->getHeight());
     }
 }
