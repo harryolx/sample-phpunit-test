@@ -19,7 +19,7 @@ class ReaderHelperTest extends Base
     {
         $this->assertEquals(
             'Rectangle (10,10) width=30 height=40',
-            readShape('rectangle x=10 y=10 width=30 height=40')->output()
+            readShape('rectangle x=10 y=10 width=30 height=40')
         );
     }
 
@@ -33,7 +33,7 @@ class ReaderHelperTest extends Base
     {
         $this->assertEquals(
             'Rectangle (10,10) width=30 height=40',
-            readInputRectangle(['Rectangle', 'x=10', 'y=10', 'width=30', 'height=40'])->output()
+            readInputRectangle(['Rectangle', 'x=10', 'y=10', 'width=30', 'height=40'])
         );
     }
 
