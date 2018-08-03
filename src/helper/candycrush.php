@@ -14,6 +14,7 @@ namespace helper\CandyCrush;
  */
 function getCount(array $param) : int {
 
+    $groups = [];
     $processed = [];
     $count = 0;
 
@@ -21,7 +22,7 @@ function getCount(array $param) : int {
         foreach ($row as $indexCol=> $col) {
             if (!isset($processed[generateProcessedKey($indexRow, $indexCol)])) {
                 $count++;
-                getRelated($param, $indexRow, $indexCol, $processed);
+                getRelated($param, $indexRow, $indexCol, $processed, $groups, $count);
             }
         }
     }
@@ -29,12 +30,13 @@ function getCount(array $param) : int {
     return $count;
 }
 
-function getRelated($param, $indexRow, $indexCol, &$processed)
+function getRelated($param, $indexRow, $indexCol, &$processed, &$groups, $count)
 {
     /**
      * current
      */
     $processed[generateProcessedKey($indexRow, $indexCol)] = 1;
+    $groups[$count][] = generateProcessedKey($indexRow, $indexCol);
     $value = $param[$indexRow][$indexCol];
 
     /**
@@ -44,7 +46,7 @@ function getRelated($param, $indexRow, $indexCol, &$processed)
         && isset($param[$indexRow - 1][$indexCol])
         && $param[$indexRow - 1][$indexCol] === $value
     ) {
-        getRelated($param, $indexRow - 1, $indexCol, $processed);
+        getRelated($param, $indexRow - 1, $indexCol, $processed, $groups, $count);
     }
 
     /**
@@ -54,7 +56,7 @@ function getRelated($param, $indexRow, $indexCol, &$processed)
         && isset($param[$indexRow + 1][$indexCol])
         && $param[$indexRow + 1][$indexCol] === $value
     ) {
-        getRelated($param,$indexRow + 1,$indexCol, $processed);
+        getRelated($param,$indexRow + 1,$indexCol, $processed, $groups, $count);
     }
 
     /**
@@ -64,7 +66,7 @@ function getRelated($param, $indexRow, $indexCol, &$processed)
         && isset($param[$indexRow][$indexCol + 1])
         && $param[$indexRow][$indexCol + 1] === $value
     ) {
-        getRelated($param,$indexRow, $indexCol + 1, $processed);
+        getRelated($param,$indexRow, $indexCol + 1, $processed, $groups, $count);
     }
 
     /**
@@ -74,7 +76,7 @@ function getRelated($param, $indexRow, $indexCol, &$processed)
         && isset($param[$indexRow][$indexCol - 1])
         && $param[$indexRow][$indexCol - 1] === $value
     ) {
-        getRelated($param,$indexRow, $indexCol - 1, $processed);
+        getRelated($param,$indexRow, $indexCol - 1, $processed, $groups, $count);
     }
 
     /**
@@ -84,7 +86,7 @@ function getRelated($param, $indexRow, $indexCol, &$processed)
         && isset($param[$indexRow - 1][$indexCol + 1])
         && $param[$indexRow - 1][$indexCol + 1] === $value
     ) {
-        getRelated($param,$indexRow - 1, $indexCol + 1, $processed);
+        getRelated($param,$indexRow - 1, $indexCol + 1, $processed, $groups, $count);
     }
 
     /**
@@ -94,7 +96,7 @@ function getRelated($param, $indexRow, $indexCol, &$processed)
         && isset($param[$indexRow - 1][$indexCol - 1])
         && $param[$indexRow - 1][$indexCol - 1] === $value
     ) {
-        getRelated($param,$indexRow - 1, $indexCol - 1, $processed);
+        getRelated($param,$indexRow - 1, $indexCol - 1, $processed, $groups, $count);
     }
 
     /**
@@ -104,7 +106,7 @@ function getRelated($param, $indexRow, $indexCol, &$processed)
         && isset($param[$indexRow + 1][$indexCol + 1])
         && $param[$indexRow + 1][$indexCol + 1] === $value
     ) {
-        getRelated($param,$indexRow + 1, $indexCol + 1, $processed);
+        getRelated($param,$indexRow + 1, $indexCol + 1, $processed, $groups, $count);
     }
 
     /**
@@ -114,7 +116,7 @@ function getRelated($param, $indexRow, $indexCol, &$processed)
         && isset($param[$indexRow + 1][$indexCol - 1])
         && $param[$indexRow + 1][$indexCol - 1] === $value
     ) {
-        getRelated($param,$indexRow + 1, $indexCol - 1, $processed);
+        getRelated($param,$indexRow + 1, $indexCol - 1, $processed, $groups, $count);
     }
 }
 
