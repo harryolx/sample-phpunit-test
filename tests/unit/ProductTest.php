@@ -16,6 +16,7 @@ class ProductTest extends Base
 {
     public function testGetDiscountedPrice()
     {
+        /** @var MockInterface $mockProduct */
         $mockProduct = \Mockery::mock(Discount::class);
         $mockProduct->shouldReceive('getPercentage')->with(1)->andReturn(0.3);
         $mockProduct->shouldReceive('getPercentage')->with(2)->andReturn(0.4);
@@ -37,6 +38,11 @@ class ProductTest extends Base
         );
     }
 
+    /**
+     * @param MockInterface $discountMock
+     * @param int $productId
+     * @return MockInterface|Product
+     */
     private function generateProductMock(MockInterface $discountMock, int $productId) : MockInterface
     {
         $mockProduct = \Mockery::mock(Product::class, [$discountMock, $productId])->makePartial();
